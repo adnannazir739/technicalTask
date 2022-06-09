@@ -1,0 +1,57 @@
+head
+meta(charset='utf-8')
+meta(name='viewport' content='width=device-width,minimum-scale=1')
+title Login
+// the form awesome library is used to add icons to our form
+link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
+// include the stylesheet file
+link(href='css/style.css' rel='stylesheet' type='text/css')
+a.btn.btn-primary(href='/questions/create' role='button') Add New Question   
+a.btn.btn-primary(href='/logout' role='button') Logout
+
+h1 Login
+form(action='/questions/filter' method='post')
+ label(for='title')
+      // font awesome icon
+ i.fas.fa-pen
+ input#title(type='text' name='title' placeholder='Title' )
+ label(for='startdate')
+      // font awesome icon
+ i.fas.fa-pen 
+ input#startdate(type='date' name='startdate' placeholder='Startdate' )
+ label(for='enddate')
+      // font awesome icon
+ i.fas.fa-pen
+ input#enddate(type='date' name='enddate' placeholder='Enddate')
+    
+ input(type='submit' value='Search')
+ a.btn.btn-primary(href='/questions/create' role='button') My Published Questions
+ table.table
+  thead
+    tr
+      th(scope='col') #
+      th(scope='col') Title
+      th(scope='col') Description
+      th(scope='col') Publish_Time
+      th(scope='col') Auther
+      th(scope='col') Add Comment
+      th(scope='col') View Comments
+
+    
+     
+  tbody
+  each value in values
+     
+    tr
+      th(scope='row')= value.id
+      td= value.title
+      td= value.description
+      td= value.createdAt
+      td= value.auther
+      td
+        a(href='/comment/add/'+value.id) Add Comment
+      td
+        a(href='/comment/view/'+value.id) View Comment  
+    
+      
+      
