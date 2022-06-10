@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "static")));
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/App/views"));
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
   console.log("Drop and re-sync db.");
 });
 
