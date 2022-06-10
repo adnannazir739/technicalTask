@@ -100,23 +100,13 @@ const enddate = new Date(req.body.enddate);
       !enddate ||
       !req.body.id
     ) {
-      //let condition;
       
 
 
       Question.findAll({
         where: {
-          [Op.or]: [
-            {
-              title: req.body.title,
-            },
-            {
+          title : req.body.title
             
-              createdAt: {
-                [Op.between]: [startdate.toLocaleDateString(), enddate.toLocaleDateString()],
-              },
-            },
-          ],
         },
       })
 
@@ -158,7 +148,7 @@ exports.update = (req, res) => {
   }
 };
 
-// Here user edit value and submit and we get post request here to submit changes
+// Here user edit value
 exports.updated = (req, res) => {
   const id = req.body.pid;
   Question.update(req.body, {
