@@ -1,4 +1,3 @@
-const { cond } = require("lodash");
 const db = require("../models/index");
 const Question = require("../models/question.model")(
   db.sequelize,
@@ -6,6 +5,7 @@ const Question = require("../models/question.model")(
 );
 const Op = db.Sequelize.Op;
 
+// Send a form on get request to to add new question 
 exports.createget = (req, res) => {
   if (req.session.loggedin == true) {
     res.render("insert");
@@ -30,9 +30,9 @@ exports.create = (req, res) => {
     // Save Question in the database
     Question.create(question)
       .then((data) => {
+        //redirect to list of questions 
         res.redirect("/questions/values");
 
-        //  res.redirect('/questions',data);
       })
       .catch((err) => {
         res.status(500).send({
@@ -41,17 +41,19 @@ exports.create = (req, res) => {
         });
       });
   } else {
+    // set error code and send error message we can also redirect to any page like again login page
     res.status(500).send("Please Login to access this page");
     res.end();
   }
 };
+
 // Retrieve all questions from the database.
 
 exports.userposts = (req, res) => {
   if (req.session.loggedin == true) {
     Question.findAll()
       .then((data) => {
-        //res.send(data);
+        
         res.render("list", { values: data });
       })
       .catch((err) => {
@@ -64,12 +66,11 @@ exports.userposts = (req, res) => {
     res.end();
   }
 };
-
+// get personal questions search according to user id that saved in questions also as a foreign key
 exports.porsonalquests = (req, res) => {
   if (req.session.loggedin == true) {
     Question.findAll({ where: { id: req.session.userid } })
       .then((data) => {
-        //res.send(data);
         res.render("list", { values: data });
       })
       .catch((err) => {
@@ -83,6 +84,7 @@ exports.porsonalquests = (req, res) => {
   }
 };
 
+// Questions Search filter action where we search against title(full or any character from title) + start date + end date OR any of them 
 exports.filter = (req, res) => {
   if (req.session.loggedin == true) {
 
@@ -103,8 +105,6 @@ const enddate = new Date(req.body.enddate);
         condition = "%" + req.body.title + "%";
       }
 
-      console.log(startdate.toLocaleDateString());
-      console.log(enddate.toLocaleDateString());
 
       Question.findAll({
         where: {
@@ -113,7 +113,7 @@ const enddate = new Date(req.body.enddate);
               title: { [Op.like]: condition },
             },
             {
-              // description: { [Op.like]: "%" + req.body.description + "%" } ,
+            
               createdAt: {
                 [Op.between]: [startdate.toLocaleDateString(), enddate.toLocaleDateString()],
               },
@@ -136,7 +136,8 @@ const enddate = new Date(req.body.enddate);
     res.end();
   }
 };
-
+// Update  question here we receive get request with ID(pk) to update question we search question and data against that id and send back
+// with update form with existing values 
 exports.update = (req, res) => {
   if (req.session.loggedin == true) {
     Question.findOne({ where: { id: req.params.id } })
@@ -159,7 +160,7 @@ exports.update = (req, res) => {
   }
 };
 
-// Update a Question by the id in the request
+// Here user edit value and submit and we get post request here to submit changes 
 exports.updated = (req, res) => {
   const id = req.body.pid;
   Question.update(req.body, {

@@ -15,9 +15,9 @@ app.use(
     saveUninitialized: true,
   })
 );
-// parse requests of content-type - application/json
+
 app.use(express.json());
-// parse requests of content-type - application/x-www-form-urlencoded
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "static")));
@@ -31,22 +31,15 @@ db.sequelize.sync({ force: true }).then(() => {
 require("./App/routes/question.routes")(app);
 
 require("./App/routes/login.routes")(app);
-require("./App/routes/comment.routes")(app);
+//require("./App/routes/comment.routes")(app);
 
 app.get("/", function (request, response) {
-  // Render login template
-  //response.sendFile(path.join(__dirname + '/App/views/login.ejs'));
+  
   response.render(path.join("login"));
 });
 
-// app.get('/tutorials', function(data,res) {
-// 	res.send('Welcome back, ' + req.session.username + `Hey there, welcome <a href=\'/logout'>click to logout</a>/n` ,data);
 
-// 	response.end();
-// });
-
-// set port, listen for requests
-const PORT = process.env.PORT || 1039;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

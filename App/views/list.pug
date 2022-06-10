@@ -6,26 +6,28 @@ title Login
 link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
 // include the stylesheet file
 link(href='css/style.css' rel='stylesheet' type='text/css')
+h4
 a.btn.btn-primary(href='/questions/create' role='button') Add New Question   
+h4
 a.btn.btn-primary(href='/logout' role='button') Logout
-
-h1 Login
+h4 Search Bar 
 form(action='/questions/filter' method='post')
- label(for='title')
+ label(for='title' text="Title")
       // font awesome icon
- i.fas.fa-pen
+ h4 Title 
  input#title(type='text' name='title' placeholder='Title' )
- label(for='startdate')
+ label(for='startdate'  text="Title")
       // font awesome icon
- i.fas.fa-pen 
+ h4 startDate
  input#startdate(type='date' name='startdate' placeholder='Startdate' )
- label(for='enddate')
+ label(for='enddate'  text="Title")
       // font awesome icon
- i.fas.fa-pen
+ h4 EndDate
  input#enddate(type='date' name='enddate' placeholder='Enddate')
     
  input(type='submit' value='Search')
- a.btn.btn-primary(href='/questions/create' role='button') My Published Questions
+ h1 Questions
+ //a.btn.btn-primary(href='/questions/adminquest' role='button') My Published Questions
  table.table
   thead
     tr
@@ -33,9 +35,9 @@ form(action='/questions/filter' method='post')
       th(scope='col') Title
       th(scope='col') Description
       th(scope='col') Publish_Time
-      th(scope='col') Auther
-      th(scope='col') Add Comment
-      th(scope='col') View Comments
+       th(scope='col') Edit
+      th(scope='col') Delete
+     
 
     
      
@@ -47,11 +49,11 @@ form(action='/questions/filter' method='post')
       td= value.title
       td= value.description
       td= value.createdAt
-      td= value.auther
+       td
+        a(href='/questions/delete/'+value.id) Delete
       td
-        a(href='/comment/add/'+value.id) Add Comment
-      td
-        a(href='/comment/view/'+value.id) View Comment  
+        a(href='/questions/update/'+value.id) Update 
+     
     
       
       

@@ -6,26 +6,27 @@ title Login
 link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
 // include the stylesheet file
 link(href='css/style.css' rel='stylesheet' type='text/css')
-a.btn.btn-primary(href='/questions/create' role='button') Add New Question   
+h4
+a.btn.btn-primary(href='/questions/create' role='button') Add New Question  
+h4 
 a.btn.btn-primary(href='/logout' role='button') Logout
 
-h1 Login
 form(action='/questions/filter' method='post')
- label(for='title')
+ label(for='title' text="Title")
       // font awesome icon
- i.fas.fa-pen
+ h4 Title
  input#title(type='text' name='title' placeholder='Title' required='')
- label(for='startdate')
+ label(for='startdate' text="StartDate")
       // font awesome icon
- i.fas.fa-pen 
+ h4 startDate
  input#startdate(type='date' name='startdate' placeholder='Startdate' )
- label(for='enddate')
+ label(for='enddate' text="EndDate")
       // font awesome icon
- i.fas.fa-pen
+ h4 endDate
  input#enddate(type='date' name='enddate' placeholder='Enddate')
     
  input(type='submit' value='Search')
-
+h1 Questions
  table.table
   thead
     tr
@@ -33,7 +34,6 @@ form(action='/questions/filter' method='post')
       th(scope='col') Title
       th(scope='col') Description
       th(scope='col') Publish_Time
-      th(scope='col') Auther
       th(scope='col') Edit
       th(scope='col') Delete
      
@@ -45,7 +45,7 @@ form(action='/questions/filter' method='post')
       td= value.title
       td= value.description
       td= value.createdAt
-      td= value.auther
+     
       td
         a(href='/questions/delete/'+value.id) Delete
       td

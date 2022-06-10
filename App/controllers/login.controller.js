@@ -1,13 +1,14 @@
 const db = require("../models/index");
 const Login = require("../models/login.model.js")(db.sequelize, db.Sequelize);
-//const Op = db.Sequelize.Op;
 
+//Session Expire on Logout Button
 exports.logout = (request, response) => {
   request.session.destroy();
 
   response.redirect("/");
 };
 
+// Call on User login page to validate from database
 exports.findOne = (request, response) => {
   // Capture the input fields
   let username = request.body.username;
@@ -16,8 +17,7 @@ exports.findOne = (request, response) => {
   // Ensure the input fields exists and are not empty
 
   if (username && password) {
-    //var condition= username==Login.username;
-
+    // condition;
     Login.findAll({ where: { username: username, password: password } }).then(
       (data) => {
         if (data.length > 0) {
@@ -25,18 +25,14 @@ exports.findOne = (request, response) => {
           request.session.loggedin = true;
           request.session.username = data.username;
           request.session.userid = data.id;
-          // console.log(data);
-          //   request.session.userid = id;
-          // 			// Redirect to home page
+        
           response.redirect("/questions/values");
-          //response.render("list")
-          // response.send('/values');
+         
         } else {
           response.status(500).send("Username or Password is Invalid");
           response.end();
         }
-        // response.status(500).send(data);
-        // response.end();
+      
       }
     );
   }
