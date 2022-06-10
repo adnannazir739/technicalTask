@@ -100,17 +100,15 @@ const enddate = new Date(req.body.enddate);
       !enddate ||
       !req.body.id
     ) {
-      let condition;
-      if (req.body.title.length > 3) {
-        condition = "%" + req.body.title + "%";
-      }
+      //let condition;
+      
 
 
       Question.findAll({
         where: {
           [Op.or]: [
             {
-              title: { [Op.like]: condition },
+              title: req.body.title,
             },
             {
             
@@ -160,7 +158,7 @@ exports.update = (req, res) => {
   }
 };
 
-// Here user edit value and submit and we get post request here to submit changes 
+// Here user edit value and submit and we get post request here to submit changes
 exports.updated = (req, res) => {
   const id = req.body.pid;
   Question.update(req.body, {
