@@ -5,7 +5,7 @@ const Question = require("../models/question.model")(
 );
 const Op = db.Sequelize.Op;
 
-// Send a form on get request to to add new question 
+// Send a form on get request to to add new question
 exports.createget = (req, res) => {
   if (req.session.loggedin == true) {
     res.render("insert");
@@ -30,9 +30,8 @@ exports.create = (req, res) => {
     // Save Question in the database
     Question.create(question)
       .then((data) => {
-        //redirect to list of questions 
+        //redirect to list of questions
         res.redirect("/questions/values");
-
       })
       .catch((err) => {
         res.status(500).send({
@@ -53,7 +52,6 @@ exports.userposts = (req, res) => {
   if (req.session.loggedin == true) {
     Question.findAll()
       .then((data) => {
-        
         res.render("list", { values: data });
       })
       .catch((err) => {
@@ -84,29 +82,47 @@ exports.porsonalquests = (req, res) => {
   }
 };
 
-// Questions Search filter action where we search against title(full or any character from title) + start date + end date OR any of them 
+// Questions Search filter action where we search against title(full or any character from title) + start date + end date OR any of them
 exports.filter = (req, res) => {
   if (req.session.loggedin == true) {
+    const startdate = new Date(req.body.startdate);
+    const enddate = new Date(req.body.enddate);
 
-const startdate = new Date(req.body.startdate);
-const enddate = new Date(req.body.enddate);
-
- startdate.setUTCHours(00, 00, 00, 000);
- enddate.setUTCHours(23, 59, 59, 999);
+    startdate.setUTCHours(00, 00, 00, 000);
+    enddate.setUTCHours(23, 59, 59, 999);
 
     if (
-      !req.body.title ||
-      !startdate ||
-      !enddate ||
-      !req.body.id
+      req.body.title != "" &&
+      req.body.startdate != "" &&
+      req.body.enddate != ""
     ) {
-      
-
-
       Question.findAll({
         where: {
-          title : req.body.title
-            
+          [Op.and]: [
+            { title: req.body.title },
+            { createdAt: { [Op.between]: [startdate, enddate] } },
+          ],
+        },
+
+      
+      })
+
+        .then((data) => {
+          res.render("list", { values: data });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: "Error retrieving Question ",
+          });
+        });
+    } else if (
+      req.body.title == "" &&
+      req.body.startdate != "" &&
+      req.body.enddate != ""
+    ) {
+      Question.findAll({
+        where: {
+          createdAt: { [Op.between]: [startdate, enddate] },
         },
       })
 
@@ -118,6 +134,34 @@ const enddate = new Date(req.body.enddate);
             message: "Error retrieving Question ",
           });
         });
+    } else if (req.body.title != "") {
+      Question.findAll({
+        where: {
+          title: {
+            [Op.like]: "%" + req.body.title + "%",
+          },
+        },
+      })
+
+        .then((data) => {
+          res.render("list", { values: data });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: "Error retrieving Questionnnn ",
+          });
+        });
+    } else {
+      Question.findAll()
+
+        .then((data) => {
+          res.render("list", { values: data });
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: "Error retrieving Questions ",
+          });
+        });
     }
   } else {
     res.status(500).send("Please Login to access this page");
@@ -125,7 +169,7 @@ const enddate = new Date(req.body.enddate);
   }
 };
 // Update  question here we receive get request with ID(pk) to update question we search question and data against that id and send back
-// with update form with existing values 
+// with update form with existing values
 exports.update = (req, res) => {
   if (req.session.loggedin == true) {
     Question.findOne({ where: { id: req.params.id } })
