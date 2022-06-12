@@ -8,7 +8,16 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
      },
-      
+      QId:{
+
+        type: Sequelize.INTEGER,
+
+      },
+      userId:{
+
+        type: Sequelize.INTEGER,
+
+      },
       
       description: {
         type: Sequelize.STRING,

@@ -1,6 +1,6 @@
-// module.exports = (app) => {
-//   const Comment = require("../controllers/comment.controller.js");
-//   var router = require("express").Router();
+ module.exports = (app) => {
+  const Comment = require("../controllers/comment.controller.js");
+  var router = require("express").Router();
 //   // add new comment
 //   router.get("/add", Comment.add);
 //   router.post("/added", Comment.add);
@@ -10,9 +10,9 @@
 
 //   //  Edit and Delete Comments
 
-//   router.get("/update/:id", Comment.update);
-//   router.post("/updated", Comment.updated);
+    router.get("/commentForm/:id", Comment.addComment);
+   router.post("/create", Comment.create);
 //   router.get("/delete/:id", Comment.delete);
 
-//   app.use("/comment", router);
-// };
+  app.use("/comments", router);
+ };

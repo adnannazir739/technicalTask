@@ -22,10 +22,11 @@ exports.findOne = (request, response) => {
       (data) => {
         if (data.length > 0) {
           // 			// Authenticate the user
+         const user =data[0];
           request.session.loggedin = true;
-          request.session.username = data.username;
-          request.session.userid = data.id;
-        
+          request.session.username = user.username;
+          request.session.userid = user.id;
+          
           response.redirect("/questions/values");
          
         } else {

@@ -1,0 +1,15 @@
+head
+  meta(charset='utf-8')
+  meta(name='viewport' content='width=device-width,minimum-scale=1')
+  title Login
+  // the form awesome library is used to add icons to our form
+  link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
+  // include the stylesheet file
+  link(href='css/style.css' rel='stylesheet' type='text/css')
+.form
+  h1 Insert New Question
+  form(action='/comments/create' method='post')
+    label(for='description')
+    input#description(type='text' name='description' placeholder='Description' required='')
+    input#comid(type='hidden' name='comid' value="9")
+    input(type='submit' value='Save')

@@ -31,7 +31,7 @@ db.sequelize.sync().then(() => {
 require("./App/routes/question.routes")(app);
 
 require("./App/routes/login.routes")(app);
-//require("./App/routes/comment.routes")(app);
+require("./App/routes/comment.routes")(app);
 
 app.get("/", function (request, response) {
   
