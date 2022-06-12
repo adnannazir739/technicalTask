@@ -1,0 +1,41 @@
+head
+meta(charset='utf-8')
+meta(name='viewport' content='width=device-width,minimum-scale=1')
+title Login
+// the form awesome library is used to add icons to our form
+link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
+// include the stylesheet file
+link(href='css/style.css' rel='stylesheet' type='text/css')
+ 
+h4
+a.btn.btn-primary(href='/logout' role='button') Logout
+ br
+ br
+ br
+
+table.table
+  thead
+    tr
+      th(scope='col') #
+      th(scope='col') Description
+      th(scope='col') Auther
+     
+      th(scope='col') Comment date
+     
+
+    
+     
+  tbody
+  each value in values
+     
+    tr
+      th(scope='row')= value.id
+      td= value.description
+      td= value.auther
+      td= value.createdAt
+       
+h4
+a.btn.btn-primary(href='/questions/values' role='button') Back to Questions  
+    
+      
+      

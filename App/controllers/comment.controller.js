@@ -46,3 +46,25 @@ exports.create = (req, res) => {
     res.end();
   }
 };
+
+
+
+
+//all Comments of specific question
+
+exports.commentList = (req, res) => {
+  if (req.session.loggedin == true) {
+    Comment.findAll({ where: { QId: req.params.id } })
+      .then((data) => {
+        res.render("allcomments", { values: data });
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: "Error retrieving Question ",
+        });
+      });
+  } else {
+    res.status(500).send("Please Login to access this page");
+    res.end();
+  }
+};

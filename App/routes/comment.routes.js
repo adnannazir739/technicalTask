@@ -12,6 +12,7 @@
 
     router.get("/commentForm/:id", Comment.addComment);
    router.post("/create", Comment.create);
+   router.get("/allcomments/:id", Comment.commentList);
 //   router.get("/delete/:id", Comment.delete);
 
   app.use("/comments", router);

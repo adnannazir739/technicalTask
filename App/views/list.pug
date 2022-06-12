@@ -38,6 +38,7 @@ form(action='/questions/filter' method='post')
       th(scope='col') Delete
       th(scope='col') Edit
       th(scope='col') Add Comments
+      th(scope='col') View Comments
 
     
      
@@ -55,6 +56,8 @@ form(action='/questions/filter' method='post')
         a(href='/questions/update/'+value.id) Update 
       td
         a(href='/comments/commentForm/'+value.id) Add Comments 
+      td
+        a(href='/comments/allcomments/'+value.id) View Comments 
      
     
       
