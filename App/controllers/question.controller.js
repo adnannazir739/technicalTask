@@ -90,7 +90,7 @@ exports.filter = (req, res) => {
 
     startdate.setUTCHours(00, 00, 00, 000);
     enddate.setUTCHours(23, 59, 59, 999);
-
+//Runs when user puts title+ start date and ends date
     if (
       req.body.title != "" &&
       req.body.startdate != "" &&
@@ -115,7 +115,9 @@ exports.filter = (req, res) => {
             message: "Error retrieving Question ",
           });
         });
-    } else if (
+    } 
+    //Runs when user puts title but No start date and ends date
+    else if (
       req.body.title == "" &&
       req.body.startdate != "" &&
       req.body.enddate != ""
@@ -134,7 +136,9 @@ exports.filter = (req, res) => {
             message: "Error retrieving Question ",
           });
         });
-    } else if (req.body.title != "") {
+    } 
+    //Runs when user puts No title but select any start date and ends date
+    else if (req.body.title != "") {
       Question.findAll({
         where: {
           title: {
@@ -151,7 +155,9 @@ exports.filter = (req, res) => {
             message: "Error retrieving Questionnnn ",
           });
         });
-    } else {
+    } 
+    //Runs when user puts puts nothing and click search button it will again show all records
+    else {
       Question.findAll()
 
         .then((data) => {
