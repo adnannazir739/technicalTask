@@ -25,7 +25,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "/App/views"));
 
 db.sequelize.sync().then(() => {
-  console.log("Drop and re-sync db.");
+  //console.log("Drop and re-sync db.");
 });
 
 require("./App/routes/question.routes")(app);

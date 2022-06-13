@@ -1,13 +1,12 @@
 head
 meta(charset='utf-8')
 meta(name='viewport' content='width=device-width,minimum-scale=1')
-title Login
+title List of Question
 // the form awesome library is used to add icons to our form
 link(rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
 // include the stylesheet file
 link(href='css/style.css' rel='stylesheet' type='text/css')
-h4
-a.btn.btn-primary(href='/questions/create' role='button') Add New Question   
+  
 h4
 a.btn.btn-primary(href='/logout' role='button') Logout
 h4 Search Bar 
@@ -26,6 +25,9 @@ form(action='/questions/filter' method='post')
  input#enddate(type='date' name='enddate' placeholder='Enddate')
     
  input(type='submit' value='Search')
+ br
+ h4
+ a.btn.btn-primary(href='/questions/create' role='button') Add New Question 
  h1 Questions
  //a.btn.btn-primary(href='/questions/adminquest' role='button') My Published Questions
  table.table
@@ -34,6 +36,7 @@ form(action='/questions/filter' method='post')
       th(scope='col') #
       th(scope='col') Title
       th(scope='col') Description
+      th(scope='col') Auther
       th(scope='col') Publish_Time
       th(scope='col') Delete
       th(scope='col') Edit
@@ -49,6 +52,7 @@ form(action='/questions/filter' method='post')
       th(scope='row')= value.id
       td= value.title
       td= value.description
+      td= value.auther
       td= value.createdAt
        td
         a(href='/questions/delete/'+value.id) Delete
